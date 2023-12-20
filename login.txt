@@ -1,0 +1,28 @@
+<?php
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "loginpage";
+$conn = new mysqli($host,$user,$password,$database);
+if($conn -> connect_error)
+{
+die("connection failed:".$conn->connect_error);
+}
+$username = $_POST["username"];
+$password = $_POST["password"];
+$query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+$result = $conn->query($query);
+if($result->num_rows ==1)
+{
+echo "<h2>login successful</h2>";
+echo "<h2>logged as $username</h2>";
+}
+else
+{
+echo "<h2>login failed.please check the username and password</h2>";
+}
+$conn->close();
+}
+?>
